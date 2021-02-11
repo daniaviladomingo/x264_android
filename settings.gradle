@@ -1,0 +1,3 @@
+include ':x264Encoder'
+include ':app'
+rootProject.name = "X264 Encode"
