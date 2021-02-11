@@ -2,9 +2,9 @@
 
 Preview frame encoder to h264 using native library [x264]
 
-This sample record a video h264 in
+This example record a video h264 and save in
 ``` 
-to storage/emulated/0/Download/sample.h264
+storage/emulated/0/Download/sample.h264
 ```
 To reproduce this video you can use [VLC for Android]
 
