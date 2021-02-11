@@ -2,7 +2,9 @@
 
 Preview frame encoder to h264 using native library [x264]
 
-## Compile x264 source code to different Android ABIs (armeabi-v7a, arm64-v8a, x86, x86_64)
+## Build x264 lib
+
+Build x264 lib for different Android ABIs (armeabi-v7a, arm64-v8a, x86, x86_64)
 
 This project is based in: [sszhangpengfei encoder]
 
