@@ -1,6 +1,5 @@
-package daniel.avila.x264encoder
+package daniel.avila.x264encoder.jni
 
-import android.util.Log
 import java.nio.ByteBuffer
 
 class X264Encoder {
@@ -32,7 +31,6 @@ class X264Encoder {
     }
 
     private fun callbackEncoder(buffer: ByteArray, length: Int) {
-        Log.d("ccc", "Time to encode: ${System.currentTimeMillis() - timeStamp}")
         bus(buffer)
     }
 

@@ -9,7 +9,7 @@ export CXX=$TOOLCHAIN/bin/x86_64-linux-android21-clang++
 function build_x86_64
 {
   ./configure \
-  --prefix=./prebuilt/x86_64 \
+  --prefix=./../prebuilt/x86_64 \
   --enable-static \
   --enable-pic \
   --disable-asm \

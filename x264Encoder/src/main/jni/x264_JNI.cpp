@@ -68,7 +68,7 @@ void CALLBACK callbackEncoder(void* pdata,int datalen)
 	}
 }
 
-static void Java_eu_electronicid_sdk_h264encoder_init(JNIEnv *env, jobject jobj,jint width, jint height, jint fps, jint bite)
+static void Java_daniel_avila_x264encoder_jni_init(JNIEnv *env, jobject jobj,jint width, jint height, jint fps, jint bite)
 {
 	env->GetJavaVM(&VM);
 	if (VM != NULL && VM->AttachCurrentThread(&env, NULL) == JNI_OK)
@@ -82,14 +82,14 @@ static void Java_eu_electronicid_sdk_h264encoder_init(JNIEnv *env, jobject jobj,
 	init(width,height,fps,bite,callbackEncoder);
 }
 
-static void Java_eu_electronicid_sdk_h264encoder_encoderH264(JNIEnv *env, jobject jobj,jint lenght, jlong time)
+static void Java_daniel_avila_x264encoder_jni_encoderH264(JNIEnv *env, jobject jobj,jint lenght, jlong time)
 {
 	jobject input = (jobject) env->GetObjectField(jobj, fid_yuvbuffer);
 	unsigned char * jb = (unsigned char *) env->GetDirectBufferAddress(input);
 	encoderH264(jb, lenght, time);
 }
 
-static void Java_eu_electronicid_sdk_h264encoder_release(JNIEnv *env, jobject jobj)
+static void Java_daniel_avila_x264encoder_jni_release(JNIEnv *env, jobject jobj)
 {
 	release();
 }
@@ -98,9 +98,9 @@ static void Java_eu_electronicid_sdk_h264encoder_release(JNIEnv *env, jobject jo
 //************************************************************JNI_LOAL****************************************************************/
 //************************************************************************************************************************************/
 
-static JNINativeMethod gMethods[] = {{"init", "(IIII)V",(void *)Java_eu_electronicid_sdk_h264encoder_init},
-                                     {"encoderH264", "(IJ)I",(void *)Java_eu_electronicid_sdk_h264encoder_encoderH264},
-                                     {"release","()V",(void *)Java_eu_electronicid_sdk_h264encoder_release}};
+static JNINativeMethod gMethods[] = {{"init", "(IIII)V",(void *)Java_daniel_avila_x264encoder_jni_init},
+                                     {"encoderH264", "(IJ)I",(void *)Java_daniel_avila_x264encoder_jni_encoderH264},
+                                     {"release","()V",(void *)Java_daniel_avila_x264encoder_jni_release}};
 
 
 int register_Native_Methods(JNIEnv *env) {

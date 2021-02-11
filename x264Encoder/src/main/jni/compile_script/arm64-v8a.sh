@@ -9,7 +9,7 @@ export CXX=$TOOLCHAIN/bin/aarch64-linux-android21-clang++
 function build_arm64-v8a
 {
   ./configure \
-  --prefix=./prebuilt/arm64-v8a \
+  --prefix=./../prebuilt/arm64-v8a \
   --enable-static \
   --enable-pic \
   --disable-asm \

@@ -9,7 +9,7 @@ export CXX=$TOOLCHAIN/bin/i686-linux-android18-clang++
 function build_x86
 {
   ./configure \
-  --prefix=./prebuilt/x86 \
+  --prefix=./../prebuilt/x86 \
   --enable-static \
   --enable-pic \
   --disable-asm \

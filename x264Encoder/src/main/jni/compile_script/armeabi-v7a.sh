@@ -9,7 +9,7 @@ export CXX=$TOOLCHAIN/bin/armv7a-linux-androideabi18-clang++ # c++ compiler path
 function build_armeabi-v7a
 {
   ./configure \
-  --prefix=./prebuilt/armeabi-v7a \
+  --prefix=./../prebuilt/armeabi-v7a \
   --enable-static \
   --enable-pic \
   --disable-asm \
