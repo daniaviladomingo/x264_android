@@ -11,7 +11,6 @@ import android.os.Handler
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.appcompat.app.AppCompatActivity
-import daniel.avila.domain.model.PreviewImage
 import daniel.avila.x264.databinding.ActivityMainBinding
 import daniel.avila.x264.encoder.H264EncoderImp
 import daniel.avila.x264.encoder.YUVRotateUtil
@@ -58,7 +57,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
     override fun onPreviewFrame(data: ByteArray, camera: Camera) {
         val size = camera.parameters.previewSize
 
-        h264Encoder.yuv420spToH264(PreviewImage(data, size.width, size.height, 90)) {
+        h264Encoder.yuv420spToH264(data, cameraRotation) {
             outputStream.write(it, 0, it.size)
         }
     }
