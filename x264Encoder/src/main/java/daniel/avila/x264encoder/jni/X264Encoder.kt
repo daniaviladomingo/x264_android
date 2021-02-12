@@ -7,8 +7,6 @@ class X264Encoder {
 
     private var mVideoBuffer: ByteBuffer? = null
 
-    private var timeStamp = 0L
-
     external fun init(width: Int, height: Int, fps: Int, bitrate: Int)
 
     external fun encoderH264(length: Int, time: Long): Int
@@ -26,7 +24,6 @@ class X264Encoder {
         }
         mVideoBuffer!!.rewind()
         mVideoBuffer!!.put(buffer, 0, buffer.size)
-        this@X264Encoder.timeStamp = System.currentTimeMillis()
         encoderH264(buffer.size, time)
     }
 
