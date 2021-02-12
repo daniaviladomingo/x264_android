@@ -29,10 +29,10 @@ To reproduce this video you can use [VLC for Android]
 Go to ~jni/compile_script and execute all script (configure your ndk path and others)
 
 ```
-./arm64-v8a.sh
-./armeabi-v7a.sh
-./x86.sh
-./x86_64.sh
+# ./arm64-v8a.sh
+# ./armeabi-v7a.sh
+# ./x86.sh
+# ./x86_64.sh
 ```
 
 This project is based in: [sszhangpengfei encoder]
