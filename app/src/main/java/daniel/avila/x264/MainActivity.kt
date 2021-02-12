@@ -55,10 +55,8 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
     }
 
     override fun onPreviewFrame(data: ByteArray, camera: Camera) {
-        val size = camera.parameters.previewSize
-
-        h264Encoder.yuv420spToH264(data, cameraRotation) {
-            outputStream.write(it, 0, it.size)
+        h264Encoder.yuv420spToH264(data, cameraRotation) { h264Frame ->
+            outputStream.write(h264Frame, 0, h264Frame.size)
         }
     }
 
