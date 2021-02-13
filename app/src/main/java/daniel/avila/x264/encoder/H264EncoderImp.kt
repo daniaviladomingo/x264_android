@@ -33,11 +33,11 @@ class H264EncoderImp(
         isReleased = true
     }
 
-    override fun yuv420spToH264(data: ByteArray, rotate: Int, h264Frame: (ByteArray) -> Unit){
+    override fun yuv420spToH264(data: ByteArray, rotate: Int, h264Frame: (ByteArray) -> Unit) {
         time += timeStamp
 
-        val rotatedYuv420sp = when(rotate){
-            0-> yuvRotateUtil.rotateYUV420Degree180(data, width, height)
+        val rotatedYuv420sp = when (rotate) {
+            0 -> data
             90 -> yuvRotateUtil.rotateYUV420Degree90(data, height, width)
             180 -> yuvRotateUtil.rotateYUV420Degree180(data, width, height)
             270 -> yuvRotateUtil.rotateYUV420Degree270(data, height, width)
