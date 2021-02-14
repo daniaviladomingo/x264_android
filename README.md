@@ -6,7 +6,7 @@ Preview frame encoder to h264 using native library [x264]
 
 ```
 override fun onPreviewFrame(data: ByteArray, camera: Camera) {
-    h264Encoder.yuv420spToH264(data, cameraRotation) { h264Frame ->
+    h264Encoder.yuv420spToH264(data) { h264Frame ->
         // process h264Frame
     }
 }
