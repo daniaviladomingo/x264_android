@@ -2,10 +2,8 @@ package daniel.avila.x264.encoder
 
 import daniel.avila.x264encoder.jni.X264Encoder
 
-
 class H264EncoderImp(
-    private val h264Encoder: X264Encoder,
-    private val yuvRotateUtil: YUVRotateUtil
+    private val h264Encoder: X264Encoder
 ) : IH264Encoder {
 
     private var isReleased = true
@@ -33,18 +31,10 @@ class H264EncoderImp(
         isReleased = true
     }
 
-    override fun yuv420spToH264(data: ByteArray, rotate: Int, h264Frame: (ByteArray) -> Unit) {
+    override fun yuv420spToH264(data: ByteArray, h264Frame: (ByteArray) -> Unit) {
         time += timeStamp
 
-        val rotatedYuv420sp = when (rotate) {
-            0 -> data
-            90 -> yuvRotateUtil.rotateYUV420Degree90(data, height, width)
-            180 -> yuvRotateUtil.rotateYUV420Degree180(data, width, height)
-            270 -> yuvRotateUtil.rotateYUV420Degree270(data, height, width)
-            else -> throw IllegalArgumentException("preview rotation must be 0, 90, 180 or 270")
-        }
-
-        val yuv420 = yuv420spToYuv420(rotatedYuv420sp, width, height)
+        val yuv420 = yuv420spToYuv420(data, width, height)
         h264Encoder.encodeFromYUV420(yuv420, time) {
             h264Frame(it)
         }

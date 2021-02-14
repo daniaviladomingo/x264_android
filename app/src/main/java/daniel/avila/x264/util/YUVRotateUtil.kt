@@ -1,4 +1,4 @@
-package daniel.avila.x264.encoder
+package daniel.avila.x264.util
 
 class YUVRotateUtil {
     fun rotateYUV420Degree90(

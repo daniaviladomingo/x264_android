@@ -13,7 +13,7 @@ import android.view.SurfaceView
 import androidx.appcompat.app.AppCompatActivity
 import daniel.avila.x264.databinding.ActivityMainBinding
 import daniel.avila.x264.encoder.H264EncoderImp
-import daniel.avila.x264.encoder.YUVRotateUtil
+import daniel.avila.x264.util.YUVRotateUtil
 import daniel.avila.x264encoder.jni.X264Encoder
 import java.io.BufferedOutputStream
 import java.io.File
@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
     private lateinit var surfaceHolder: SurfaceHolder
     private lateinit var surfaceView: SurfaceView
 
-    private val h264Encoder = H264EncoderImp(X264Encoder(), YUVRotateUtil())
+    private val h264Encoder = H264EncoderImp(X264Encoder())
+    private val yuvRotateUtil = YUVRotateUtil()
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -55,7 +56,9 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
     }
 
     override fun onPreviewFrame(data: ByteArray, camera: Camera) {
-        h264Encoder.yuv420spToH264(data, cameraRotation) { h264Frame ->
+        val dataRotated = rotatePreview(data, cameraRotation)
+
+        h264Encoder.yuv420spToH264(dataRotated) { h264Frame ->
             outputStream.write(h264Frame, 0, h264Frame.size)
         }
     }
@@ -132,6 +135,16 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
         camera.parameters = parameters
         camera.setPreviewDisplay(surfaceHolder)
         camera.startPreview()
+    }
+
+    private fun rotatePreview(data: ByteArray, rotation: Int): ByteArray =
+        when (rotation) {
+            0 -> data
+            90 -> yuvRotateUtil.rotateYUV420Degree90(data, width, height)
+            180 -> yuvRotateUtil.rotateYUV420Degree180(data, width, height)
+            270 -> yuvRotateUtil.rotateYUV420Degree270(data, width, height)
+            else -> throw IllegalArgumentException("preview rotation must be 0, 90, 180 or 270")
+
     }
 
     private fun getCamera(): Camera = Camera.open(0)
