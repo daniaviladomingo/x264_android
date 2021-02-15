@@ -1,11 +1,29 @@
-# x264 for Android
+# x264 & libyuv for Android
 
-Preview frame encoder to h264 using native library [x264]
-
+Preview frame scale & encoder to h264 using native libraries
+* [x264]
+* [libyuv]
 ### Usage
 
 ```
 override fun onPreviewFrame(data: ByteArray, camera: Camera) {
+    val i420Rotated = yuvUtils.nV21ToI420Rotate(
+        data,
+        widthPreview,
+        heightPreview,
+        Key.ROTATE_90,
+        true
+    )
+
+    val i420RotatedScaled = yuvUtils.nV21Scale(
+        i420Rotated,
+        heightPreview,
+        widthPreview,
+        widthOut,
+        heightOut,
+        Key.SCALE_MODE_LINEAR,
+    )
+    
     h264Encoder.yuv420spToH264(data) { h264Frame ->
         // process h264Frame
     }
@@ -35,8 +53,10 @@ Go to ~jni/compile_script and execute all script (configure your ndk path and ot
 # ./x86_64.sh
 ```
 
-This project is based in: [sszhangpengfei encoder]
+This project is based in: [sszhangpengfei encoder] and [doggycoder AndroidLibyuv]
 
 [sszhangpengfei encoder]: https://github.com/sszhangpengfei/android_x264_encoder
+[doggycoder AndroidLibyuv]: https://github.com/doggycoder/AndroidLibyuv
 [x264]: https://www.videolan.org/developers/x264.html
+[libyuv]: https://chromium.googlesource.com/libyuv/libyuv/
 [VLC for Android]: https://play.google.com/store/apps/details?id=org.videolan.vlc&hl=es_CO
