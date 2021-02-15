@@ -7,7 +7,7 @@ Preview frame scale & encoder to h264 using native libraries
 
 ```
 override fun onPreviewFrame(data: ByteArray, camera: Camera) {
-    val i420Rotated = yuvUtils.nV21ToI420Rotate(
+    val rotated = yuvUtils.nV21Rotate(
         data,
         widthPreview,
         heightPreview,
@@ -15,8 +15,8 @@ override fun onPreviewFrame(data: ByteArray, camera: Camera) {
         true
     )
 
-    val i420RotatedScaled = yuvUtils.nV21Scale(
-        i420Rotated,
+    val rotatedNScaled = yuvUtils.nV21Scale(
+        rotated,
         heightPreview,
         widthPreview,
         widthOut,
@@ -24,7 +24,7 @@ override fun onPreviewFrame(data: ByteArray, camera: Camera) {
         Key.SCALE_MODE_LINEAR,
     )
     
-    h264Encoder.yuv420spToH264(data) { h264Frame ->
+    h264Encoder.nV21ToH264(rotatedNScaled) { h264Frame ->
         // process h264Frame
     }
 }
