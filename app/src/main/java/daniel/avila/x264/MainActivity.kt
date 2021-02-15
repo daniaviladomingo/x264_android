@@ -8,6 +8,7 @@ import android.hardware.Camera
 import android.hardware.Camera.PreviewCallback
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,8 @@ import daniel.avila.x264.databinding.ActivityMainBinding
 import daniel.avila.x264.encoder.H264EncoderImp
 import daniel.avila.x264.util.YUVRotateUtil
 import daniel.avila.x264encoder.jni.X264Encoder
+import daniel.avila.yuvutils.Key
+import daniel.avila.yuvutils.YuvUtils
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -22,11 +25,14 @@ import java.io.FileOutputStream
 class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallback {
     private val requestPermission = 1
 
-    private val width = 640
-    private val height = 480
+    private val widthPreview = 640
+    private val heightPreview = 480
     private lateinit var camera: Camera
     private val fps = 15
     private val bitrate = 900000
+
+    private val widthOut = heightPreview / 2
+    private val heightOut = widthPreview / 2
 
     private val cameraRotation = 90
 
@@ -34,6 +40,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
     private lateinit var surfaceView: SurfaceView
 
     private val h264Encoder = H264EncoderImp(X264Encoder())
+    private val yuvUtils = YuvUtils()
     private val yuvRotateUtil = YUVRotateUtil()
 
     private var _binding: ActivityMainBinding? = null
@@ -56,17 +63,32 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
     }
 
     override fun onPreviewFrame(data: ByteArray, camera: Camera) {
-        val dataRotated = rotatePreview(data, cameraRotation)
+        val i420Rotated = yuvUtils.nV21ToI420Rotate(
+            data,
+            widthPreview,
+            heightPreview,
+            Key.ROTATE_90,
+            true
+        )
 
-        h264Encoder.yuv420spToH264(dataRotated) { h264Frame ->
+        val i420RotatedScaled = yuvUtils.nV21Scale(
+            i420Rotated,
+            heightPreview,
+            widthPreview,
+            widthOut,
+            heightOut,
+            Key.SCALE_MODE_LINEAR,
+        )
+
+        h264Encoder.yuv420spToH264(i420RotatedScaled) { h264Frame ->
             outputStream.write(h264Frame, 0, h264Frame.size)
         }
     }
 
     override fun surfaceCreated(p0: SurfaceHolder) {
         when (cameraRotation) {
-            90, 270 -> h264Encoder.init(height, width, fps, bitrate)
-            0, 180 -> h264Encoder.init(width, height, fps, bitrate)
+            90, 270 -> h264Encoder.init(widthOut, heightOut, fps, bitrate)
+            0, 180 -> h264Encoder.init(heightOut, widthOut, fps, bitrate)
             else -> throw IllegalArgumentException("Camera rotation must be 0, 90, 180, 270")
         }
         if (isPermissionGranted(listOf(Manifest.permission.CAMERA))) {
@@ -118,7 +140,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
         val parameters = camera.parameters
         parameters.previewFormat = NV21
         parameters.previewFrameRate = 15
-        parameters.setPreviewSize(width, height)
+        parameters.setPreviewSize(widthPreview, heightPreview)
         parameters.supportedFocusModes.run {
             when {
                 this.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE) -> parameters.focusMode =
@@ -140,12 +162,12 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
     private fun rotatePreview(data: ByteArray, rotation: Int): ByteArray =
         when (rotation) {
             0 -> data
-            90 -> yuvRotateUtil.rotateYUV420Degree90(data, width, height)
-            180 -> yuvRotateUtil.rotateYUV420Degree180(data, width, height)
-            270 -> yuvRotateUtil.rotateYUV420Degree270(data, width, height)
+            90 -> yuvRotateUtil.rotateYUV420Degree90(data, widthPreview, heightPreview)
+            180 -> yuvRotateUtil.rotateYUV420Degree180(data, widthPreview, heightPreview)
+            270 -> yuvRotateUtil.rotateYUV420Degree270(data, widthPreview, heightPreview)
             else -> throw IllegalArgumentException("preview rotation must be 0, 90, 180 or 270")
 
-    }
+        }
 
     private fun getCamera(): Camera = Camera.open(0)
 

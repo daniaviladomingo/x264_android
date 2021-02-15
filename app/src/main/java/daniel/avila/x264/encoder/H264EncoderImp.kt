@@ -34,8 +34,8 @@ class H264EncoderImp(
     override fun yuv420spToH264(data: ByteArray, h264Frame: (ByteArray) -> Unit) {
         time += timeStamp
 
-        val yuv420 = yuv420spToYuv420(data, width, height)
-        h264Encoder.encodeFromYUV420(yuv420, time) {
+//        val yuv420 = yuv420spToYuv420(data, width, height)
+        h264Encoder.encodeFromYUV420(data, time) {
             h264Frame(it)
         }
     }

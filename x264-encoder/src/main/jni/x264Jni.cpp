@@ -1,4 +1,4 @@
-#include "x264_JNI.h"
+#include "x264Jni.h"
 #include "x264encoder.h"
 #include <string.h>
 #include <stdlib.h>

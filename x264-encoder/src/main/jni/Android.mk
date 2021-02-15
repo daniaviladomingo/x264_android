@@ -10,7 +10,7 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS) 
 LOCAL_MODULE := x264encoder
-LOCAL_SRC_FILES := $(LOCAL_PATH)/x264_JNI.cpp \
+LOCAL_SRC_FILES := $(LOCAL_PATH)/x264Jni.cpp \
 				   $(LOCAL_PATH)/PUX264Encoder.cpp \
 	               $(LOCAL_PATH)/x264encoder.cpp
 LOCAL_CFLAGS    :=

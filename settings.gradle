@@ -1,3 +1,4 @@
-include ':x264Encoder'
+include ':yuv-utils'
+include ':x264-encoder'
 include ':app'
 rootProject.name = "X264 Encode"
