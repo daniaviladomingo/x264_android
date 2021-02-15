@@ -8,7 +8,6 @@ import android.hardware.Camera
 import android.hardware.Camera.PreviewCallback
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.appcompat.app.AppCompatActivity
@@ -63,7 +62,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
     }
 
     override fun onPreviewFrame(data: ByteArray, camera: Camera) {
-        val i420Rotated = yuvUtils.nV21ToI420Rotate(
+        val rotated = yuvUtils.nV21Rotate(
             data,
             widthPreview,
             heightPreview,
@@ -71,8 +70,8 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
             true
         )
 
-        val i420RotatedScaled = yuvUtils.nV21Scale(
-            i420Rotated,
+        val rotatedNScaled = yuvUtils.nV21Scale(
+            rotated,
             heightPreview,
             widthPreview,
             widthOut,
@@ -80,7 +79,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
             Key.SCALE_MODE_LINEAR,
         )
 
-        h264Encoder.yuv420spToH264(i420RotatedScaled) { h264Frame ->
+        h264Encoder.nV21ToH264(rotatedNScaled) { h264Frame ->
             outputStream.write(h264Frame, 0, h264Frame.size)
         }
     }

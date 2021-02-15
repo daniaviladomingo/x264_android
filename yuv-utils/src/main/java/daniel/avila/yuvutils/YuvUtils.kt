@@ -1,7 +1,7 @@
 package daniel.avila.yuvutils
 
 class YuvUtils {
-    fun nV21ToI420Rotate(
+    fun nV21Rotate(
         data: ByteArray,
         width: Int,
         height: Int,
@@ -25,7 +25,6 @@ class YuvUtils {
         NV21Scale(data, width, height, out, dstWidth, dstHeight, type)
         return out
     }
-
 
     external fun RgbaToI420(
         type: Int, rgba: ByteArray?, stride: Int, yuv: ByteArray?,

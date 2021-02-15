@@ -31,38 +31,11 @@ class H264EncoderImp(
         isReleased = true
     }
 
-    override fun yuv420spToH264(data: ByteArray, h264Frame: (ByteArray) -> Unit) {
+    override fun nV21ToH264(data: ByteArray, h264Frame: (ByteArray) -> Unit) {
         time += timeStamp
 
-//        val yuv420 = yuv420spToYuv420(data, width, height)
         h264Encoder.encodeFromYUV420(data, time) {
             h264Frame(it)
         }
-    }
-
-    private fun yuv420spToYuv420(yuv420sp: ByteArray, width: Int, height: Int): ByteArray {
-        val yuv420 = ByteArray(width * height * 3 / 2)
-        val frameSize = width * height
-        //copy y
-        var i = 0
-        while (i < frameSize) {
-            yuv420[i] = yuv420sp[i]
-            i++
-        }
-        i = 0
-        var j = 0
-        while (j < frameSize / 2) {
-            yuv420[i + frameSize * 5 / 4] = yuv420sp[j + frameSize]
-            i++
-            j += 2
-        }
-        i = 0
-        j = 1
-        while (j < frameSize / 2) {
-            yuv420[i + frameSize] = yuv420sp[j + frameSize]
-            i++
-            j += 2
-        }
-        return yuv420
     }
 }
