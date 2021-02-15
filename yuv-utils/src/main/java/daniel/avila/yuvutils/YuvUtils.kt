@@ -9,7 +9,14 @@ class YuvUtils {
         swapUV: Boolean
     ): ByteArray {
         val out = ByteArray(width * height * 3 / 2)
-        NV21ToI420Rotate(data, width, height, out, rotation, swapUV)
+        when (rotation) {
+            0 -> NV21ToI420(data, out, width, height, swapUV)
+            90 -> NV21ToI420Rotate(data, width, height, out, Key.ROTATE_90, swapUV)
+            180 -> NV21ToI420Rotate(data, width, height, out, Key.ROTATE_180, swapUV)
+            270 -> NV21ToI420Rotate(data, width, height, out, Key.ROTATE_270, swapUV)
+            else -> throw IllegalArgumentException("Rotation fatal failed")
+        }
+
         return out
     }
 

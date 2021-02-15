@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
             data,
             widthPreview,
             heightPreview,
-            Key.ROTATE_90,
+            cameraRotation,
             true
         )
 
