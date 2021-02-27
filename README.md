@@ -38,12 +38,13 @@ To reproduce this video you can use [VLC for Android]
 
 ### Build x264 lib for Android ABIs (armeabi-v7a, arm64-v8a, x86, x86_64)
 
-* execute build_x264.sh
-This script clone x264 repository and build different ABIs for android
+* execute build_x264.sh - This script clone x264 repository and build different ABIs for android
 
 ```
 # ./build_x264.sh
 ```
+
+### Build libyuv lib for Android ABIs (armeabi-v7a, arm64-v8a, x86, x86_64)
 
 This project is based in: [sszhangpengfei encoder] and [doggycoder AndroidLibyuv]
 
