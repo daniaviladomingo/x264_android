@@ -13,7 +13,6 @@ import android.view.SurfaceView
 import androidx.appcompat.app.AppCompatActivity
 import daniel.avila.x264.databinding.ActivityMainBinding
 import daniel.avila.x264.encoder.H264EncoderImp
-import daniel.avila.x264.util.YUVRotateUtil
 import daniel.avila.x264encoder.jni.X264Encoder
 import daniel.avila.yuvutils.Key
 import daniel.avila.yuvutils.YuvUtils
@@ -40,7 +39,6 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
 
     private val h264Encoder = H264EncoderImp(X264Encoder())
     private val yuvUtils = YuvUtils()
-    private val yuvRotateUtil = YUVRotateUtil()
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -157,16 +155,6 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, PreviewCallbac
         camera.setPreviewDisplay(surfaceHolder)
         camera.startPreview()
     }
-
-    private fun rotatePreview(data: ByteArray, rotation: Int): ByteArray =
-        when (rotation) {
-            0 -> data
-            90 -> yuvRotateUtil.rotateYUV420Degree90(data, widthPreview, heightPreview)
-            180 -> yuvRotateUtil.rotateYUV420Degree180(data, widthPreview, heightPreview)
-            270 -> yuvRotateUtil.rotateYUV420Degree270(data, widthPreview, heightPreview)
-            else -> throw IllegalArgumentException("preview rotation must be 0, 90, 180 or 270")
-
-        }
 
     private fun getCamera(): Camera = Camera.open(0)
 
