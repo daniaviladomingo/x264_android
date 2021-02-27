@@ -38,7 +38,7 @@ To reproduce this video you can use [VLC for Android]
 
 ### Build x264 lib for Android ABIs (armeabi-v7a, arm64-v8a, x86, x86_64)
 
-* configure your local NDK, HOST_TAG and TOOLCHAIN
+* configure your local NDK, HOST_TAG and TOOLCHAIN in build_x264.sh script
 
 ```
 export NDK=/home/dani/Android/Sdk/ndk-bundle
