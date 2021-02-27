@@ -38,19 +38,11 @@ To reproduce this video you can use [VLC for Android]
 
 ### Build x264 lib for Android ABIs (armeabi-v7a, arm64-v8a, x86, x86_64)
 
-* clone x264 repository in ~/jni folder
+* execute build_x264.sh
+This script clone x264 repository and build different ABIs for android
 
 ```
-# git clone https://code.videolan.org/videolan/x264.git
-```
-
-Go to ~jni/compile_script and execute all script (configure your ndk path and others)
-
-```
-# ./arm64-v8a.sh
-# ./armeabi-v7a.sh
-# ./x86.sh
-# ./x86_64.sh
+# ./build_x264.sh
 ```
 
 This project is based in: [sszhangpengfei encoder] and [doggycoder AndroidLibyuv]
