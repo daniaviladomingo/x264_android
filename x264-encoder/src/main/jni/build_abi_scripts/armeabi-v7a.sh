@@ -13,8 +13,8 @@ function build_armeabi-v7a
   --disable-opencl \
   --disable-cli \
   --host=arm-linux \
-  --cross-prefix=$TOOLCHAIN/bin/arm-linux-androideabi- \
-  --sysroot=$TOOLCHAIN/sysroot \
+  --cross-prefix="$TOOLCHAIN"/bin/arm-linux-androideabi- \
+  --sysroot="$TOOLCHAIN"/sysroot \
 
   make clean
   make

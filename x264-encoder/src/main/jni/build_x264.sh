@@ -13,7 +13,7 @@ chmod +x $BUILD_SCRIPTS/armeabi-v7a.sh
 chmod +x $BUILD_SCRIPTS/x86_64.sh
 chmod +x $BUILD_SCRIPTS/x86.sh
 
-cd x264
+cd x264 || exit
 
 ../$BUILD_SCRIPTS/./arm64-v8a.sh
 ../$BUILD_SCRIPTS/./armeabi-v7a.sh

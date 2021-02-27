@@ -13,8 +13,8 @@ function build_x86_64
   --disable-opencl \
   --disable-cli \
   --host=x86_64-linux \
-  --cross-prefix=$TOOLCHAIN/bin/x86_64-linux-android- \
-  --sysroot=$TOOLCHAIN/sysroot \
+  --cross-prefix="$TOOLCHAIN"/bin/x86_64-linux-android- \
+  --sysroot="$TOOLCHAIN"/sysroot \
 
   make clean
   make

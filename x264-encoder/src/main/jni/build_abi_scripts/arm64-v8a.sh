@@ -13,8 +13,8 @@ function build_arm64-v8a
   --disable-opencl \
   --disable-cli \
   --host=aarch64-linux \
-  --cross-prefix=$TOOLCHAIN/bin/aarch64-linux-android- \
-  --sysroot=$TOOLCHAIN/sysroot \
+  --cross-prefix="$TOOLCHAIN"/bin/aarch64-linux-android- \
+  --sysroot="$TOOLCHAIN"/sysroot \
 
   make clean
   make
