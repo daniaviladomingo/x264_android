@@ -54,6 +54,8 @@ export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
 
 ### Build libyuv lib for Android ABIs (armeabi-v7a, arm64-v8a, x86, x86_64)
 
+* Coming soon..
+
 This project is based in: [sszhangpengfei encoder] and [doggycoder AndroidLibyuv]
 
 [sszhangpengfei encoder]: https://github.com/sszhangpengfei/android_x264_encoder
